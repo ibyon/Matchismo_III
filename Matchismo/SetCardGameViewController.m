@@ -10,36 +10,48 @@
 #import "PlayingSetCard.h"
 #import "PlayingSetCardDeck.h"
 #import "CardMatchingGame.h"
-//#import <QuartzCore/QuartzCore.h>
+#import "SetCardCollectionViewCell.h"
+#import "SetCardView.h"
 
 @interface SetCardGameViewController ()
-@property (strong, nonatomic) CardMatchingGame *game;
+//@property (strong, nonatomic) CardMatchingGame *game;
 @end
 
 @implementation SetCardGameViewController
 
-- (CardMatchingGame *)game
+-(NSUInteger) startingCardCount
 {
-    if (!_game){
-        //reusing CardMatchingGame
-        _game = [[CardMatchingGame alloc]
-                 initWithCardCount:self.startingCardCount
-                 usingDeck:[[PlayingSetCardDeck alloc] init]];
-        //as set card is 3 card mode, setting this value as 3
-        _game.mode = 3;
-    }
-    return _game;
+    return 20;
 }
 
-- (Deck *)createDeck {return nil;}
-
-
-- (void)updateUI
+- (Deck *)createDeck
 {
-    //NSLog(@"updateUI");
-    
-//    NSLog(@"flips updated to %d", self.flipCount);
+    return [[PlayingSetCardDeck alloc] init];
+}
 
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SetCard" forIndexPath:indexPath];
+    Card *card = [self.game cardAtIndex:indexPath.item];
+    [self updateCell:cell usingCard:card];
+    return cell;
+}
+
+
+- (void) updateCell:(UICollectionViewCell *)cell usingCard:(Card *)card
+{
+    if ([cell isKindOfClass:[SetCardCollectionViewCell class]]){
+        SetCardView *setCardView = ((SetCardCollectionViewCell *) cell).setCardView;
+        
+        if ([card isKindOfClass:[PlayingSetCard class]]){
+            PlayingSetCard *setCard = (PlayingSetCard *)card;
+            setCardView.rank = setCard.rank;
+            setCardView.suit = setCard.suit;
+            setCardView.faceUp = setCard.isFaceUp;
+            setCardView.alpha = setCard.isUnplayable ? 0.3 : 1.0;
+        }
+    }
 }
 
 

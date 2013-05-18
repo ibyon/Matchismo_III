@@ -1,18 +1,19 @@
 //
-//  PlayingCardView.m
-//  SuperCard
+//  SetCardView.m
+//  Matchismo_III
 //
-//  Created by CS193p Instructor.
-//  Copyright (c) 2013 Stanford University. All rights reserved.
+//  Created by bgbb on 5/10/13.
+//  Copyright (c) 2013 Qpoo Lab. All rights reserved.
 //
 
-#import "PlayingCardView.h"
+#import "SetCardView.h"
 
-@interface PlayingCardView()
+@interface SetCardView()
 @property (nonatomic) CGFloat faceCardScaleFactor;
 @end
 
-@implementation PlayingCardView
+@implementation SetCardView
+
 
 #pragma mark - Properties
 
@@ -23,7 +24,7 @@
 - (CGFloat)faceCardScaleFactor
 {
     if (!_faceCardScaleFactor) _faceCardScaleFactor = DEFAULT_FACE_CARD_SCALE_FACTOR;
-        return _faceCardScaleFactor;
+    return _faceCardScaleFactor;
 }
 
 - (void)setFaceCardScaleFactor:(CGFloat)faceCardScaleFactor
@@ -50,12 +51,22 @@
     [self setNeedsDisplay];
 }
 
+- (void)setShading:(NSString *)shading
+{
+    _shading = shading;
+    [self setNeedsDisplay];
+}
+
+- (void)setColor:(NSString *)color
+{
+    _color = color;
+    [self setNeedsDisplay];
+}
+
 - (NSString *)rankAsString
 {
     return @[@"?",@"A",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"J",@"Q",@"K"][self.rank];
 }
-
-#pragma mark - Drawing
 
 #define CORNER_RADIUS 12.0
 
@@ -83,7 +94,7 @@
     } else {
         [[UIImage imageNamed:@"cardback.png"] drawInRect:self.bounds];
     }
-
+    
     [[UIColor blackColor] setStroke];
     [roundedRect stroke];
 }
@@ -207,23 +218,14 @@
     }
 }
 
-#pragma mark - Initialization
 
-- (void)setup
+/*
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect
 {
-    // do initialization here
+    // Drawing code
 }
-
-- (void)awakeFromNib
-{
-    [self setup];
-}
-
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    [self setup];
-    return self;
-}
+*/
 
 @end

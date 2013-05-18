@@ -8,7 +8,6 @@
 
 #import "CardGameViewController.h"
 #import "PlayingCardDeck.h"
-#import "CardMatchingGame.h"
 
 @interface CardGameViewController () <UICollectionViewDataSource>
 @property (weak, nonatomic) IBOutlet UILabel *flipLabel;
@@ -18,7 +17,6 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *cardCollectionView;
 
 @property (nonatomic) int flipCount;
-@property (strong, nonatomic) CardMatchingGame *game;
 
 @end
 

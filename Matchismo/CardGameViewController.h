@@ -8,19 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "Deck.h"
+#import "CardMatchingGame.h"
 
 @interface CardGameViewController : UIViewController
 
 - (Deck *)createDeck; //abstract
 - (void) updateCell:(UICollectionViewCell *)cell usingCard:(Card *)card; //abstract
 @property (nonatomic) NSUInteger startingCardCount;
+@property (strong, nonatomic) CardMatchingGame *game;
 
-// to do: clean up
-//-(IBAction)dealButton;
-
-//-(IBAction)flipCard:(UIButton *)sender;
-
-//-(void) setCardButtons:(NSArray *)cardButtons;
-
-//-(void) setFlippedCount:(int)flippedCount;
 @end
