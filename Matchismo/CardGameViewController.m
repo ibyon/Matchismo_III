@@ -12,8 +12,6 @@
 @interface CardGameViewController () <UICollectionViewDataSource>
 @property (weak, nonatomic) IBOutlet UILabel *flipLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
-//@property (weak, nonatomic) IBOutlet UILabel *gameStatusLabel;
-//@property (weak, nonatomic) IBOutlet UISegmentedControl *modeSegm;
 @property (weak, nonatomic) IBOutlet UICollectionView *cardCollectionView;
 
 @property (nonatomic) int flipCount;
@@ -102,7 +100,7 @@
     
     self.game = nil;
     self.flipCount = 0;
-    
+    NSLog(@"Deal button");
     [self updateUI];
 }
 

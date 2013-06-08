@@ -43,11 +43,15 @@
 {
     if ([cell isKindOfClass:[SetCardCollectionViewCell class]]){
         SetCardView *setCardView = ((SetCardCollectionViewCell *) cell).setCardView;
-        
         if ([card isKindOfClass:[PlayingSetCard class]]){
             PlayingSetCard *setCard = (PlayingSetCard *)card;
+
+            NSLog(@"card content:%@",card.contents);
+            
             setCardView.rank = setCard.rank;
             setCardView.suit = setCard.suit;
+            setCardView.color = setCard.color;
+            setCardView.shading = setCard.shading;
             setCardView.faceUp = setCard.isFaceUp;
             setCardView.alpha = setCard.isUnplayable ? 0.3 : 1.0;
         }
