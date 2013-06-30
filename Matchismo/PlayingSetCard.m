@@ -72,7 +72,7 @@
     // 2 will disqualify this set immediately
     while (key = [keyEnum nextObject]){
         val = [[propDC valueForKey:key] intValue];
-        NSLog(@"value:%d for key %@",val, key);
+        //NSLog(@"value:%d for key %@",val, key);
         if (val == 2){
             //non matching set disqualified.. move to next property
             break;
@@ -95,6 +95,8 @@
     if ([otherCards count] < 2){
         score = 1;
         return score;
+    }else{
+        return 3;
     }
 
     NSMutableDictionary *suitDC  = [[NSMutableDictionary alloc] init];

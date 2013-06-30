@@ -20,6 +20,8 @@
 
 -(NSUInteger) startingCardCount
 {
+    //initialize mode
+    self.mode = 2;
     return 20;
 }
 

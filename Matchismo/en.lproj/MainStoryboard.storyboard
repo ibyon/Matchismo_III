@@ -188,6 +188,7 @@
                                 </cells>
                                 <connections>
                                     <outlet property="dataSource" destination="t4m-GH-Fm6" id="4j9-pA-FNR"/>
+                                    <outlet property="delegate" destination="t4m-GH-Fm6" id="vyh-Gb-lMV"/>
                                     <outletCollection property="gestureRecognizers" destination="tA3-93-xhJ" appends="YES" id="INX-sQ-k9g"/>
                                 </connections>
                             </collectionView>

@@ -20,9 +20,19 @@
 
 - (Card *)cardAtIndex:(NSUInteger) index;
 
+- (void)removeCard:(Card *) card;
+
+- (void)removeCardAtIndex:(NSUInteger) index;
+
+- (NSUInteger)indexOfCard:(Card *)card;
+
+- (NSUInteger) numberOfCardsInPlay;
+
+
 @property (readonly,nonatomic) int score;
 @property (nonatomic) int mode;
 @property (readonly,nonatomic) NSString *gameStatus;
 @property (readonly,nonatomic) BOOL isGameOn;
+@property (readonly,nonatomic) NSArray *flippedCards;
 
 @end

@@ -159,7 +159,9 @@
     
     [roundedRect addClip];
     
-    [[UIColor whiteColor] setFill];
+    UIColor *backgroundColor = (self.faceUp) ? [UIColor grayColor] : [UIColor whiteColor] ;
+
+    [backgroundColor setFill];
     UIRectFill(self.bounds);
     
     [self drawCard];
@@ -169,12 +171,7 @@
 }
 
 - (void)drawCard
-{
-    NSLog(@"color %@", self.color);
-    NSLog(@"suit %@", self.suit);
-    NSLog(@"shade %@", self.shading);
-    NSLog(@"rank %d", self.rank);
-    
+{    
 
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
@@ -191,6 +188,8 @@
     self.strokeColor = [self getUIColorWithAlpha:(CGFloat)1.0];
     
     NSMutableArray *centers = [[NSMutableArray alloc] init];
+    
+    //finding out center points
     
     if (self.rank == 1 || self.rank == 3)
     {
@@ -212,8 +211,7 @@
          [centers addObject:[NSValue valueWithCGPoint:CGPointMake(self.bounds.size.width/2, 3*(self.bounds.size.height/4))]];
     }
     
-    
-    
+    //let's draw shapes
     for (int i = 0; i < self.rank; i++){
         CGPoint center = [[centers objectAtIndex:i] CGPointValue];
         if ([self.suit isEqualToString:SUIT_DIAMOND]){
@@ -223,12 +221,8 @@
             [self popContext];
         }else if ([self.suit isEqualToString:SUIT_CIRCLE]){
             [self drawOval: center ];
-            //[self pushContextUpsideDownRotate:YES];
-            //[self drawOval: center ];
-            //[self popContext];
         }else if ([self.suit isEqualToString:SUIT_SQUARE]){
             [self drawSquiggle: center ];
-            //[self popContext];
         }
     }
     

@@ -21,9 +21,9 @@
 
 -(NSUInteger) startingCardCount
 {
-    return 20;
+    self.mode = 3;
+    return 12;
 }
-
 - (Deck *)createDeck
 {
     return [[PlayingSetCardDeck alloc] init];
@@ -38,25 +38,24 @@
     return cell;
 }
 
-
 - (void) updateCell:(UICollectionViewCell *)cell usingCard:(Card *)card
 {
     if ([cell isKindOfClass:[SetCardCollectionViewCell class]]){
         SetCardView *setCardView = ((SetCardCollectionViewCell *) cell).setCardView;
         if ([card isKindOfClass:[PlayingSetCard class]]){
             PlayingSetCard *setCard = (PlayingSetCard *)card;
-
-            NSLog(@"card content:%@",card.contents);
             
             setCardView.rank = setCard.rank;
             setCardView.suit = setCard.suit;
             setCardView.color = setCard.color;
             setCardView.shading = setCard.shading;
             setCardView.faceUp = setCard.isFaceUp;
-            setCardView.alpha = setCard.isUnplayable ? 0.3 : 1.0;
+            setCardView.alpha = setCard.isUnplayable? 0.3 : 1.0;
         }
     }
 }
+
+
 
 
 @end

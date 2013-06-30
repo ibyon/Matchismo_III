@@ -9,7 +9,7 @@
 #import "CardGameViewController.h"
 #import "PlayingCardDeck.h"
 
-@interface CardGameViewController () <UICollectionViewDataSource>
+@interface CardGameViewController () <UICollectionViewDataSource,UICollectionViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *flipLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UICollectionView *cardCollectionView;
@@ -41,12 +41,23 @@
     //abstract
 }
 
+#pragma mark - UICollectionViewDelegate
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    // TODO: Select Item
+}
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+    // TODO: Deselect item
+}
+
 - (CardMatchingGame *)game
 {
-    if (!_game)
+    if (!_game){
         _game = [[CardMatchingGame alloc]
                  initWithCardCount:self.startingCardCount
                  usingDeck:[self createDeck]];
+        _game.mode = self.mode;
+    }
     return _game;
 }
 
@@ -54,12 +65,41 @@
 
 - (void)updateUI
 {
-    for (UICollectionViewCell *cell in [self.cardCollectionView visibleCells]){
+    NSMutableArray *deletedItemsPath = [[NSMutableArray alloc] init];
+    NSMutableArray *deletedCards = [[NSMutableArray alloc] init];
+    //NSArray *cells = [self.cardCollectionView visibleCells];
+    
+    for (Card *card in self.game.flippedCards){
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[self.game indexOfCard:card] inSection:0];
+        //Card *card = [self.game cardAtIndex:indexPath.item];
+        // if card is gone then cell will be gone too
+        //[self updateCell:cell usingCard:card];
+        
+        if (card.isUnplayable){
+            [deletedItemsPath addObject:indexPath];
+            [deletedCards addObject:card];
+        }
+    }
+    // remove cards to be deleted from datasource
+    
+    for (NSIndexPath *path in deletedItemsPath){
+         NSLog(@"Path %@, index %d",path,path.item);
+         [self.game removeCardAtIndex:path.item];
+    }
+    NSLog(@"#of cards:%d", [self.game numberOfCardsInPlay]);
+
+    NSLog(@"#of items:%d", [self.cardCollectionView numberOfItemsInSection:0]);
+    
+    [self.cardCollectionView deleteItemsAtIndexPaths:deletedItemsPath];
+    
+    for (UICollectionViewCell *cell in [self.cardCollectionView visibleCells])
+    {
         NSIndexPath *indexPath = [self.cardCollectionView indexPathForCell:cell];
         Card *card = [self.game cardAtIndex:indexPath.item];
+        
         [self updateCell:cell usingCard:card];
     }
-    
+
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
 //    self.modeSegm.enabled = !self.game.isGameOn;
 }
@@ -92,7 +132,10 @@
         self.flipCount++;
         //    [self setGameStatusLabelText];
         [self setScoreLabelText];
+        
         [self updateUI];
+        [self.cardCollectionView reloadData];
+
     }
 }
 
